@@ -15,7 +15,7 @@ dataset_config:
 
 generation_args:
   gen_length: 256
-  block_length: 32
+  block_length: 128
   temperature: 0.0
 
 method: 'remix' # default, remix
