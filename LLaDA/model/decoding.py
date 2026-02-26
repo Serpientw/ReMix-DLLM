@@ -37,7 +37,7 @@ def get_num_transfer_tokens(mask_index, steps):
     return num_transfer_tokens
 
 @ torch.no_grad()
-def decoding_default(model, prompt, steps=128, gen_length=128, block_length=128, temperature=0.,
+def decoding_default(model, prompt, steps=256, gen_length=256, block_length=128, temperature=0.,
              cfg_scale=0., remasking='low_confidence', mask_id=126336, store=False):
     '''
     Default decoding function from LLaDA paper
@@ -110,7 +110,7 @@ def decoding_default(model, prompt, steps=128, gen_length=128, block_length=128,
     return (x, steps * num_blocks, history) if store else (x, steps * num_blocks)
 
 @torch.no_grad()
-def decoding_remix(model, prompt, gen_length=128, block_length=128, temperature=0.,
+def decoding_remix(model, prompt, gen_length=256, block_length=256, temperature=0.,
                         mask_id=126336, threshold=0.9, js_threshold=0.3, beta_mix=0.5, store=False):
     """
     Args:
