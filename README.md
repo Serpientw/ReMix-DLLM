@@ -1,1 +1,1 @@
-# Remix-DLLM
+# ReMix-DLLM
