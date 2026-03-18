@@ -9,7 +9,7 @@ This repository offers the codebase for **ReMix**, including comprehensive scrip
 We recommend using [uv](https://github.com/astral-sh/uv) for dependency and virtual environment management.
 
 For LLaDA:
-```
+```bash
 pip install uv
 cd LLaDA
 uv venv --python 3.11 dev
@@ -17,7 +17,7 @@ source dev/bin/activate
 uv pip install -r requirements.txt
 ```
 For MMaDA:
-```
+```bash
 cd MMaDA
 pip install uv
 uv venv --python 3.11 dev
@@ -50,11 +50,34 @@ Datasets not listed above are already included in the [`./LLaDA/data/`](./LLaDA/
 
 2. Demo
 
-We have provided a quick demo to run our method on LLaDA, make sure to set `model_path` to your model path.
-```
+We have provided a quick demo to run our method on LLaDA, make sure to set `model_path` to your local model path.
+```bash
 python demo.py
 ```
 
 3. Evaluation
 
-Configuration files for the benchmarks listed above are located in [`./LLaDA/configs/`](./LLaDA/configs/). To ensure a successful evaluation, you must modify the corresponding YAML file before running the script.
+Configuration files for the benchmarks listed above are located in [`./LLaDA/configs/`](./LLaDA/configs/). To ensure a successful evaluation, you **must** complete `data_root` and `model_path` in the corresponding YAML file before running the script.
+
+To run the evaluation with default settings, simply execute:
+```bash
+bash eval.sh
+```
+If you wish to adjust the generation parameters(e.g., `gen_length`, `steps` and `threshold`), you have two options:
+1. **Modify Configuration Files**: For persistent settings, edit the corresponding YAML file in [`./LLaDA/configs/`](./LLaDA/configs/).
+2. **Command-Line Overrides**: For temporary adjustments or rapid experimentation, you can modify the command in [`eval.sh`](./LLaDA/eval.sh) by adding the --gen-kwargs flag. For example:
+```bash
+torchrun --nproc_per_node=8 eval.py \
+  --config configs/gsm8k.yaml \
+  --method remix \
+  --gen-kwargs threshold=0.8,js_threshold=0.2,beta_mix=0.6 \ 
+```
+> [!NOTE]
+> Parameters passed via `--gen-kwargs` will override the values specified in the YAML configuration.
+
+### Evaluation on MMaDA
+1. Demo
+
+We have provided a quick demo to run our method on MMaDA, make sure to set `model_path` to your local model path.
+
+We use [lmms-eval](https://github.com/EvolvingLMMs-Lab/lmms-eval) for our evaluation on MMaDA.
