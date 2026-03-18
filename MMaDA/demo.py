@@ -14,8 +14,9 @@ reasoning_prompt = "You should first think about the reasoning process in the mi
 if __name__ == '__main__':
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model_path = "Gen-Verse/MMaDA-8B-MixCoT"
 
-    tokenizer = AutoTokenizer.from_pretrained("Gen-Verse/MMaDA-8B-MixCoT", padding_side="left")
+    tokenizer = AutoTokenizer.from_pretrained(model_path, padding_side="left")
     uni_prompting = UniversalPrompting(tokenizer, max_text_len=512,
                                        special_tokens=(
                                        "<|soi|>", "<|eoi|>", "<|sov|>", "<|eov|>", "<|t2i|>", "<|mmu|>", "<|t2v|>",
@@ -27,7 +28,7 @@ if __name__ == '__main__':
     vq_model.requires_grad_(False)
     vq_model.eval()
 
-    model = MMadaModelLM.from_pretrained("Gen-Verse/MMaDA-8B-MixCoT", trust_remote_code=True, torch_dtype=torch.bfloat16)
+    model = MMadaModelLM.from_pretrained(model_path, trust_remote_code=True, torch_dtype=torch.bfloat16)
     model.to(device)
     mask_token_id = model.config.mask_token_id
 
