@@ -19,8 +19,8 @@ def main():
     prompt = tokenizer.apply_chat_template(m, add_generation_prompt=True, tokenize=False)
     input_ids = tokenizer(prompt, return_tensors="pt").input_ids.cuda()
     
-    out, step, history = decoding_default(model, input_ids, steps=256, gen_length=256, block_length=128, temperature=0., cfg_scale=0., remasking='low_confidence', store=True)
-    # out, step, history = decoding_remix(model, input_ids, gen_length=256, block_length=128, threshold=0.8, js_threshold=0.3, beta_mix=0.5, store=True) 
+    # out, step, history = decoding_default(model, input_ids, steps=256, gen_length=256, block_length=128, temperature=0., cfg_scale=0., remasking='low_confidence', store=True)
+    out, step, history = decoding_remix(model, input_ids, gen_length=256, block_length=128, threshold=0.8, js_threshold=0.3, beta_mix=0.5, store=True) 
 
     print(f'Total steps: {step}\n')
     for i in range(len(history)):
