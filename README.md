@@ -54,3 +54,7 @@ We have provided a quick demo to run our method on LLaDA, make sure to set `mode
 ```
 python demo.py
 ```
+
+3. Evaluation
+
+We use configuration files in [`./LLaDA/configs`](`./LLaDA/configs`) for the benchmarks listed above.
