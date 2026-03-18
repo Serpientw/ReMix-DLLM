@@ -1,4 +1,4 @@
-# ReMix <a href="https://arxiv.org/abs/2602.22868" alt="arXiv"> <img src="https://img.shields.io/badge/arXiv-2602.22868-b31b1b.svg?style=flat" /></a> <a href="https://arxiv.org/pdf/2602.22868" alt="arXiv"> <img src="https://img.shields.io/badge/Paper-PDF-b31b1b.svg?style=flat" /></a>
+# ReMix-DLLM <a href="https://arxiv.org/abs/2602.22868" alt="arXiv"> <img src="https://img.shields.io/badge/arXiv-2602.22868-b31b1b.svg?style=flat" /></a> <a href="https://arxiv.org/pdf/2602.22868" alt="arXiv"> <img src="https://img.shields.io/badge/Paper-PDF-b31b1b.svg?style=flat" /></a>
 
 Official Implementation of "Rejection Mixing: Fast Semantic Propagation of Mask Tokens for Efficient DLLM Inference" 
 
@@ -29,7 +29,7 @@ uv pip install -e .
 ```
 
 ### Evaluation on LLaDA
-1. Prepare Model and Datasets
+1. **Prepare Model and Datasets**
 
 Before running inference or evaluation, please download the following models and datasets from [Hugging Face](https://huggingface.co/) into the specified local directories (e.g., `./LLaDA/models/` and `./LLaDA/data/`). 
 
@@ -48,19 +48,21 @@ You may use either `huggingface-cli` or the Python `datasets` library to complet
 
 Datasets not listed above are already included in the [`./LLaDA/data/`](./LLaDA/data/) directory
 
-2. Demo
+2. **Demo**
 
 We have provided a quick demo to run our method on LLaDA, make sure to set `model_path` to your local model path.
 ```bash
+cd LLaDA
 python demo.py
 ```
 
-3. Evaluation
+3. **Evaluation**
 
 Configuration files for the benchmarks listed above are located in [`./LLaDA/configs/`](./LLaDA/configs/). To ensure a successful evaluation, you **must** complete `data_root` and `model_path` in the corresponding YAML file before running the script.
 
 To run the evaluation with default settings, simply execute:
 ```bash
+cd LLaDA
 bash eval.sh
 ```
 If you wish to adjust the generation parameters(e.g., `gen_length`, `steps` and `threshold`), you have two options:
@@ -75,9 +77,34 @@ torchrun --nproc_per_node=8 eval.py \
 > [!NOTE]
 > Parameters passed via `--gen-kwargs` will override the values specified in the YAML configuration.
 
+4. **Further Developement**
+
+To compare ReMix with other dLLM inference acceleration techniques, you can implement additional decoding functions in [`./LLaDA/model/decoding.py`](./LLaDA/model/decoding.py).
+
 ### Evaluation on MMaDA
-1. Demo
+1. **Demo**
 
 We have provided a quick demo to run our method on MMaDA, make sure to set `model_path` to your local model path.
+```bash
+cd MMaDA
+python demo.py
+```
+2. **Evaluation**
 
-We use [lmms-eval](https://github.com/EvolvingLMMs-Lab/lmms-eval) for our evaluation on MMaDA.
+We utilize [lmms-eval](https://github.com/EvolvingLMMs-Lab/lmms-eval) for MMaDA evaluation.
+> [!IMPORTANT]
+> Some benchmarks (e.g., MathVista) require an auxiliary model for evaluation. Ensure your `OPENAI_API_KEY` and `OPENAI_API_URL` are properly configured before running the scripts.
+
+Next, to run the evaluation, simply execute:
+```
+cd MMaDA
+bash eval.sh
+```
+
+3. **Further Developement**
+
+To compare ReMix with other dLLM inference acceleration techniques, you can implement additional decoding functions within the `MMadaModelLM` class. Depending on your use case, modify the corresponding file:
+- For [`demo.py`](`./MMaDA/demo.py`): [`./MMaDA/models/modeling_mmada.py`](./MMaDA/models/modeling_mmada.py)
+- For evaluation: [`./MMaDA/lmms_eval/lmms_eval/models/model_mmada/modeling_mmada.py`](./MMaDA/lmms_eval/lmms_eval/models/model_mmada/modeling_mmada.py)
+
+Additionally, to reproduce TPS and latency metrics or apply custom modifications, please refer to the `MMaDA.generate_until` method in [`./MMaDA/lmms_eval/lmms_eval/models/mmada.py`](./MMaDA/lmms_eval/lmms_eval/models/mmada.py).
