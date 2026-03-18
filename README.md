@@ -57,4 +57,4 @@ python demo.py
 
 3. Evaluation
 
-We use configuration files in [`./LLaDA/configs`](`./LLaDA/configs`) for the benchmarks listed above.
+We use configuration files in [`./LLaDA/configs/`](`./LLaDA/configs/`) for the benchmarks listed above.
