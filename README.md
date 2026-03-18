@@ -57,4 +57,4 @@ python demo.py
 
 3. Evaluation
 
-We use configuration files in [`./LLaDA/configs/`](`./LLaDA/configs/`) for the benchmarks listed above.
+Configuration files for the benchmarks listed above are located in [`./LLaDA/configs/`](./LLaDA/configs/). To ensure a successful evaluation, you must modify the corresponding YAML file before running the script.
