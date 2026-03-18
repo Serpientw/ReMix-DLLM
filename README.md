@@ -108,3 +108,6 @@ To compare ReMix with other dLLM inference acceleration techniques, you can impl
 - For evaluation: [`./MMaDA/lmms_eval/lmms_eval/models/model_mmada/modeling_mmada.py`](./MMaDA/lmms_eval/lmms_eval/models/model_mmada/modeling_mmada.py)
 
 Additionally, to reproduce TPS and latency metrics or apply custom modifications, please refer to the `MMaDA.generate_until` method in [`./MMaDA/lmms_eval/lmms_eval/models/mmada.py`](./MMaDA/lmms_eval/lmms_eval/models/mmada.py).
+
+## Acknowledgement
+This implementation is based on the [WINO](https://github.com/Feng-Hong/WINO-DLLM) codebase.
