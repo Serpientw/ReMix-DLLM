@@ -3,4 +3,29 @@
 Official Implementation of "Rejection Mixing: Fast Semantic Propagation of Mask Tokens for Efficient DLLM Inference" 
 
 ## Evaluation
-In this repository, we provide scripts and instructions for our method ReMix including demo and evaluations on language model [LLaDA](https://github.com/ML-GSAI/LLaDA) and multimodal model [MMaDA](https://github.com/Gen-Verse/MMaDA). 
+This repository offers the codebase for **ReMix**, including comprehensive scripts for reproducing demos and evaluations on [LLaDA](https://github.com/ML-GSAI/LLaDA) and [MMaDA](https://github.com/Gen-Verse/MMaDA). 
+
+### Environment Management
+We recommend using [uv](https://github.com/astral-sh/uv) for dependency and virtual environment management.
+
+For LLaDA:
+```bash
+pip install uv
+cd LLaDA
+uv venv --python 3.11 dev
+source dev/bin/activate
+uv pip install -r requirements.txt
+```
+For MMaDA:
+```bash
+cd MMaDA
+pip install uv
+uv venv --python 3.11 dev
+source dev/bin/activate
+uv pip install -r requirements.txt
+### For lmms-eval
+cd lmms_eval
+uv pip install -e .
+```
+
+### Evaluation on LLaDA
